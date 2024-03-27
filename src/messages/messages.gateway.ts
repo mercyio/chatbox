@@ -32,7 +32,7 @@ export class MessagesGateway {
   @SubscribeMessage('createMessage')
   async handleMessage(@MessageBody() payload: CreateMessagesDto) {
     const createdMessage = await this.messagesService.create(payload);
-    // this.server.emit('newMessage', payload)
+    this.server.emit('newMessage', payload)
     return 'Hello world'
     // console.log( payload);
     

@@ -7,6 +7,12 @@ export class Message {
 
   @Prop({ required: true })
   message: string;
+  
+  @Prop({ required: true })
+  authorId: string
+
+  @Prop({ required: true })
+  conversationId: string
 
   @Prop({ type: Boolean, default: false })
   isEdited: boolean;

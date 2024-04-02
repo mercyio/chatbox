@@ -1,10 +1,15 @@
 
 import { Injectable } from '@nestjs/common';
 import { CreateMessagesDto, UpdateMessagesDto } from './dto/create-message.dto';
+import { MessagesGateway } from './messages.gateway';
+import { PrismaClient} from '@prisma/client';
 
+const prisma = new PrismaClient();
 @Injectable()
 
 export class MessagesService {
+  constructor(private readonly messagesGateway: MessagesGateway) {}
+
   clientToUser = {}
   messages = []
 
@@ -22,6 +27,20 @@ export class MessagesService {
 
     getClientName (clientId: string){
       return this.clientToUser[clientId]
+    }
+
+    async newMessage (payload: CreateMessagesDto ){
+      const createdMessage =  await prisma.message.create({
+        data: {
+          message: payload.message,
+          // authorId: { connect: { id: payload.authorId}},
+          // conversationId: { connect: { id: payload.conversationId }},
+          // isEdited: false,
+          // isDeleted: false,
+        },
+      });
+      this.messagesGateway.handleMessage(createdMessage)
+      return createdMessage
     }
 
   findAll() {

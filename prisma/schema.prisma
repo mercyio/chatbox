@@ -19,3 +19,18 @@ model User {
   email String  @unique
   name  String?
 }
+
+model Message {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  message         String
+  authorId        String      
+  conversationId  String  
+  isEdited        Boolean
+  isDeleted       Boolean
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+}
+
+
+

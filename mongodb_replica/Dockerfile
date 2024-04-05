@@ -10,3 +10,4 @@ INIT_REPL_CMD="rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: '$MONGO_REPLI
 until ($MONGO_COMMAND admin --port $MONGO_REPLICA_PORT --eval "$INIT_REPL_CMD"); do sleep 1; done; \
 # we are done but we keep the container by waiting on signals from the mongo task
 echo "REPLICA SET ONLINE"; wait $MONGOD_PID;
+

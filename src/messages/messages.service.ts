@@ -1,69 +1,43 @@
+/* eslint-disable prettier/prettier */
+// /* eslint-disable prettier/prettier */
+// import { Injectable } from '@nestjs/common';
+// import { PrismaClient } from '.prisma/client';
+// import { EventsGateway } from 'src/events/events.gateway';
+// import { CreateMessagesDto, UpdateMessagesDto } from './dto/create-message.dto';
+// const prisma = new PrismaClient();
 
-import { Injectable } from '@nestjs/common';
-import { CreateMessagesDto, UpdateMessagesDto } from './dto/create-message.dto';
-import { MessagesGateway } from './messages.gateway';
-import { PrismaClient} from '@prisma/client';
+// @Injectable()
+// export class MessagesService {
+//   constructor(private eventsGateway: EventsGateway) {}
 
-const prisma = new PrismaClient();
-@Injectable()
+//   async create(createMessageDto: CreateMessagesDto) {
+//     const result = await prisma.message.create({
+//       data: {
+//         message: createMessageDto.message,
+//         // Author: { connect: { id: createMessageDto.authorId } },
+//         // Conversation: { connect: { id: createMessageDto.conversationId } },
+//       },
+//     });
+//     this.eventsGateway.sendNewMessage(result);
+//     return result;
+//   }
 
-export class MessagesService {
-  constructor(private readonly messagesGateway: MessagesGateway) {}
+//   findAll() {
+//     return prisma.message.findMany();
+//   }
 
-  clientToUser = {}
-  messages = []
+//   findOne(id: string) {
+//     return prisma.message.findUnique({ where: { id } });
+//   }
 
-  identify (name : string, clientId: string){
-    this.clientToUser[clientId] = name;
+//   update(id: string, updateMessageDto: UpdateMessagesDto) {
+//     return prisma.message.update({
+//       data: { ...updateMessageDto },
+//       where: { id },
+//     });
+//   }
 
-    return Object.values(this.clientToUser);
-  }
-    async create(payload: CreateMessagesDto) {
-    const message = { ...payload};
-    this.messages.push(message)
-
-    return message
-    }
-
-    getClientName (clientId: string){
-      return this.clientToUser[clientId]
-    }
-
-    async newMessage (payload: CreateMessagesDto ){
-      const createdMessage =  await prisma.message.create({
-        data: {
-          message: payload.message,
-          // authorId: { connect: { id: payload.authorId}},
-          // conversationId: { connect: { id: payload.conversationId }},
-          // isEdited: false,
-          // isDeleted: false,
-        },
-      });
-      this.messagesGateway.handleMessage(createdMessage)
-      return createdMessage
-    }
-
-  findAll() {
-    return `This action returns all messages`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} message`;
-  }
-
-  update(id: number, updateMessageDto: UpdateMessagesDto) {
-    return `This action updates a #${id} message`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} message`;
-  }
-
-   joinRoom(id: number) {
-    return `This action removes a #${id} message`;
-  }
-
-   async typing(id: number) {
-    return `This action removes a #${id} message`;
-  }
-}
+//   remove(id: string) {
+//     return prisma.message.delete({ where: { id } });
+//   }
+// }

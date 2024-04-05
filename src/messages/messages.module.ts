@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
+// app.module.ts
 import { Module } from '@nestjs/common';
-import { MessagesService } from './messages.service';
-import { MessagesGateway } from './messages.gateway';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  providers: [MessagesGateway, MessagesService],
+  imports: [MongooseModule.forRoot('DATABASE_URL')],
 })
-export class MessagesModule {}
+export class AppModule {}
